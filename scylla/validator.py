@@ -54,7 +54,7 @@ class Validator(object):
             checking_api = IP_CHECKER_API_SSL if self._using_https else IP_CHECKER_API
 
             # First request for checking IP
-            r = requests.get(checking_api, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=15)
+            r = requests.get(checking_api, proxies={'https': proxy_str, 'http': proxy_str}, verify=False, timeout=3)
             if r.ok:
                 j = json.loads(r.text)
 
@@ -63,7 +63,7 @@ class Validator(object):
                 self._valid = True
 
                 # A second request for meta info
-                r2 = requests.get('https://api.ip.sb/geoip/{}'.format(j['ip']), timeout=15)
+                r2 = requests.get('https://api.ip.sb/geoip/{}'.format(j['ip']), timeout=3)
                 jresponse = r2.json()
 
                 # Load meta data
